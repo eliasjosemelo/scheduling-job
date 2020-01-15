@@ -22,5 +22,9 @@
     "url": "https://github.com/eliasjosemelo/scheduling-job/issues"
   },
   "homepage": "https://github.com/eliasjosemelo/scheduling-job#readme",
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.0"
+  }
 }
