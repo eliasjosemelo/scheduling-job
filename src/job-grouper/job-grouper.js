@@ -3,13 +3,49 @@
  * Agrupamento de jobs
  * 
  * */
-'use strict';
+"use strict";
 
 function group (jobs) {
+  let sorted = [];
   
-  let sorted = sortByMaxConclusionDate(jobs);
+  try {
+    sorted = sortByMaxConclusionDate(jobs);
+  } catch (e) {
+    throw "Parameter jobs needs to be an array of objects";
+  }
   
-  return [];
+  let groupment = [];
+  let windowGroupment = [];
+  let windowSize = 8;
+  let windowSizeAux = 0;
+  
+  try {
+    for (let i = 0, length = sorted.length; i < length; i++)
+    {
+      
+      let job = sorted[i];
+      
+      if ((windowSizeAux + job.duration) > windowSize) {
+        groupment.push(windowGroupment);
+        windowGroupment = [];
+        windowSizeAux = 0;
+      }
+      
+      windowGroupment.push(job.id);
+      windowSizeAux += job.duration;
+    }
+    
+    if (windowGroupment.length > 0) {
+        groupment.push(windowGroupment);
+        windowGroupment = [];
+        windowSizeAux = 0;
+    }
+  } catch (e) {
+    throw "Parameter jobs needs to be an array of objects";
+  }
+  
+  
+  return groupment;
 };
 
 function sortByMaxConclusionDate (jobs) {
