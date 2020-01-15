@@ -1,0 +1,26 @@
+{
+  "name": "scheduling-job",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasjosemelo/scheduling-job.git"
+  },
+  "keywords": [
+    "scheduling",
+    "job",
+    "node",
+    "test"
+  ],
+  "author": "Elias José de Melo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eliasjosemelo/scheduling-job/issues"
+  },
+  "homepage": "https://github.com/eliasjosemelo/scheduling-job#readme",
+  "devDependencies": {}
+}
