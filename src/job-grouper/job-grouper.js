@@ -5,20 +5,18 @@
  * */
 "use strict";
 
-function prepare (jobs) {
-  let result = [];
+function prepare (jobs, windowStartDate, windowEndDate) {
   let windowSize = 8;
   
   try {
     
-    result = sortByMaxConclusionDate(jobs);
-    result = group(result, windowSize);
+    let sorted = sortByMaxConclusionDate(jobs);
+    
+    return group(sorted, windowSize);
     
   } catch (e) {
     throw "Parameter jobs needs to be an array of objects";
   }
-  
-  return result;
 };
 
 function group (jobs, windowSize) {
