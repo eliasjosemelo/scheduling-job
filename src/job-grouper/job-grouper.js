@@ -5,45 +5,47 @@
  * */
 "use strict";
 
-function group (jobs) {
-  let sorted = [];
+function prepare (jobs) {
+  let result = [];
+  let windowSize = 8;
   
   try {
-    sorted = sortByMaxConclusionDate(jobs);
+    
+    result = sortByMaxConclusionDate(jobs);
+    result = group(result, windowSize);
+    
   } catch (e) {
     throw "Parameter jobs needs to be an array of objects";
   }
   
+  return result;
+};
+
+function group (jobs, windowSize) {
   let groupment = [];
   let windowGroupment = [];
-  let windowSize = 8;
   let windowSizeAux = 0;
   
-  try {
-    for (let i = 0, length = sorted.length; i < length; i++)
-    {
-      
-      let job = sorted[i];
-      
-      if ((windowSizeAux + job.duration) > windowSize) {
-        groupment.push(windowGroupment);
-        windowGroupment = [];
-        windowSizeAux = 0;
-      }
-      
-      windowGroupment.push(job.id);
-      windowSizeAux += job.duration;
+  for (let i = 0, length = jobs.length; i < length; i++)
+  {
+    
+    let job = jobs[i];
+    
+    if ((windowSizeAux + job.duration) > windowSize) {
+      groupment.push(windowGroupment);
+      windowGroupment = [];
+      windowSizeAux = 0;
     }
     
-    if (windowGroupment.length > 0) {
-        groupment.push(windowGroupment);
-        windowGroupment = [];
-        windowSizeAux = 0;
-    }
-  } catch (e) {
-    throw "Parameter jobs needs to be an array of objects";
+    windowGroupment.push(job.id);
+    windowSizeAux += job.duration;
   }
   
+  if (windowGroupment.length > 0) {
+      groupment.push(windowGroupment);
+      windowGroupment = [];
+      windowSizeAux = 0;
+  }
   
   return groupment;
 };
@@ -60,6 +62,7 @@ function sortByMaxConclusionDate (jobs) {
 }
 
 module.exports = {
+    prepare: prepare,
     group: group,
     sortByMaxConclusionDate: sortByMaxConclusionDate
 };
